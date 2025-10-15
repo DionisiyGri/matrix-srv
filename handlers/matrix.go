@@ -59,3 +59,18 @@ func (mh *matrixHandler) Flatten(w http.ResponseWriter, r *http.Request) {
 	flattened := mh.matrixSvc.Flatten(body)
 	fmt.Fprintf(w, strings.Join(flattened, ","))
 }
+
+func (mh *matrixHandler) Sum(w http.ResponseWriter, r *http.Request) {
+	body, err := mh.parseRequest(r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	sum, err := mh.matrixSvc.Sum(body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprintf(w, "%d", sum)
+}

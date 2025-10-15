@@ -140,3 +140,61 @@ func TestFlatten(t *testing.T) {
 		})
 	}
 }
+
+func TestSum(t *testing.T) {
+	m := NewCSVMatrixer()
+
+	tests := []struct {
+		name        string
+		input       [][]string
+		expected    int
+		expectError bool
+	}{
+		{
+			name: "Multiple rows",
+			input: [][]string{
+				{"1", "2", "3"},
+				{"4", "5", "6"},
+				{"7", "8", "9"},
+			},
+			expected:    45,
+			expectError: false,
+		},
+		{
+			name: "Single row",
+			input: [][]string{
+				{"1", "2", "3"},
+			},
+			expected:    6,
+			expectError: false,
+		},
+		{
+			name:        "Empty matrix",
+			input:       [][]string{},
+			expected:    0,
+			expectError: false,
+		},
+		{
+			name: "Matrix with non-numeric values",
+			input: [][]string{
+				{"1", "2", "a"},
+				{"4", "5", "6"},
+			},
+			expected:    0,
+			expectError: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			output, err := m.Sum(tt.input)
+			if (err != nil) != tt.expectError {
+				t.Errorf("Expected error: %v, got: %v", tt.expectError, err)
+			}
+			if output != tt.expected {
+				t.Errorf("Expected %d, got %d", tt.expected, output)
+			}
+
+		})
+	}
+}
