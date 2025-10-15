@@ -18,7 +18,7 @@ func NewCSVMatrixer() Matrixer {
 func (m csvMatrix) Echo(input [][]string) string {
 	var res string
 	for _, row := range input {
-		res = fmt.Sprintf("%s%s", res, strings.Join(row, ","))
+		res = fmt.Sprintf("%s%s\n", res, strings.Join(row, ","))
 	}
 	return res
 }

@@ -28,7 +28,6 @@ func (mh *matrixHandler) Echo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	print(body)
 	res := mh.matrixSvc.Echo(body)
 	fmt.Fprint(w, res)
 }
