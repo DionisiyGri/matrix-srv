@@ -8,6 +8,7 @@ import (
 type Matrixer interface {
 	Echo(input [][]string) string
 	Invert(input [][]string) [][]string
+	Flatten(input [][]string) []string
 }
 
 type csvMatrix struct{}
@@ -35,6 +36,14 @@ func (m csvMatrix) Invert(input [][]string) [][]string {
 		for j := 0; j < numRows; j++ {
 			res[i][j] = input[j][i]
 		}
+	}
+	return res
+}
+
+func (m csvMatrix) Flatten(input [][]string) []string {
+	var res []string
+	for _, row := range input {
+		res = append(res, row...)
 	}
 	return res
 }

@@ -48,3 +48,14 @@ func (mh *matrixHandler) Invert(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprint(w, res)
 }
+
+func (mh *matrixHandler) Flatten(w http.ResponseWriter, r *http.Request) {
+	body, err := mh.parseRequest(r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	flattened := mh.matrixSvc.Flatten(body)
+	fmt.Fprintf(w, strings.Join(flattened, ","))
+}

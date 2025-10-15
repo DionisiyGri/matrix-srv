@@ -110,3 +110,33 @@ func TestInvert(t *testing.T) {
 		})
 	}
 }
+
+func TestFlatten(t *testing.T) {
+	m := NewCSVMatrixer()
+
+	tests := []struct {
+		name     string
+		input    [][]string
+		expected []string
+	}{
+		{
+			name: "Multiple rows",
+			input: [][]string{
+				{"1", "2", "3"},
+				{"4", "5", "6"},
+				{"7", "8", "9"},
+			},
+			expected: []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			output := m.Flatten(tt.input)
+
+			if !reflect.DeepEqual(output, tt.expected) {
+				t.Errorf("Expected %v, but got %v", tt.expected, output)
+			}
+		})
+	}
+}
