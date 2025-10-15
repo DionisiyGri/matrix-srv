@@ -20,6 +20,7 @@ const (
 func main() {
 	h := handlers.New(parser.New(), matrix.NewCSVMatrixer())
 	http.HandleFunc("/echo", h.Echo)
+	http.HandleFunc("/invert", h.Invert)
 
 	log.Printf("starting server on %s", defaulPort)
 	http.ListenAndServe(defaulPort, nil)
