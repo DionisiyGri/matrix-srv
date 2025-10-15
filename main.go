@@ -23,6 +23,7 @@ func main() {
 	http.HandleFunc("/invert", h.Invert)
 	http.HandleFunc("/flatten", h.Flatten)
 	http.HandleFunc("/sum", h.Sum)
+	http.HandleFunc("/multiply", h.Multiply)
 
 	log.Printf("starting server on %s", defaulPort)
 	http.ListenAndServe(defaulPort, nil)

@@ -74,3 +74,18 @@ func (mh *matrixHandler) Sum(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, "%d", sum)
 }
+
+func (mh *matrixHandler) Multiply(w http.ResponseWriter, r *http.Request) {
+	body, err := mh.parseRequest(r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	multiply, err := mh.matrixSvc.Multiply(body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprintf(w, "%d", multiply)
+}

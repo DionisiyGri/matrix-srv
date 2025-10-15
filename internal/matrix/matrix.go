@@ -13,6 +13,7 @@ type Matrixer interface {
 	Invert(input [][]string) [][]string
 	Flatten(input [][]string) []string
 	Sum(input [][]string) (int, error)
+	Multiply(input [][]string) (int, error)
 }
 
 type csvMatrix struct{}
@@ -65,4 +66,23 @@ func (m csvMatrix) Sum(input [][]string) (int, error) {
 		}
 	}
 	return resSum, nil
+}
+
+func (m csvMatrix) Multiply(input [][]string) (int, error) {
+	if len(input) == 0 {
+		return 0, nil
+	}
+
+	resMult := 1
+	for _, row := range input {
+		for _, val := range row {
+			num, err := strconv.Atoi(val)
+			if err != nil {
+				log.Printf("cannot convert string to int - %v", err)
+				return 0, errors.New("invalid value")
+			}
+			resMult *= num
+		}
+	}
+	return resMult, nil
 }
