@@ -7,16 +7,16 @@ import (
 )
 
 type Parser interface {
-	Parse(file io.Reader) ([][]string, error)
+	ParseCSV(file io.Reader) ([][]string, error)
 }
 
-type fileParser struct{}
+type parser struct{}
 
 func New() Parser {
-	return &fileParser{}
+	return &parser{}
 }
 
-func (fp *fileParser) Parse(file io.Reader) ([][]string, error) {
+func (p *parser) ParseCSV(file io.Reader) ([][]string, error) {
 	c, err := csv.NewReader(file).ReadAll()
 	if err != nil {
 		return nil, fmt.Errorf("invalid file content: %w", err)
