@@ -22,6 +22,7 @@ func New(parser parser.Parser,
 	}
 }
 
+// Return the matrix as a string in matrix format
 func (mh *matrixHandler) Echo(w http.ResponseWriter, r *http.Request) {
 	body, err := mh.parseRequest(r)
 	if err != nil {
@@ -33,6 +34,7 @@ func (mh *matrixHandler) Echo(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, res)
 }
 
+// Return the matrix as a string in matrix format where the columns and rows are inverted
 func (mh *matrixHandler) Invert(w http.ResponseWriter, r *http.Request) {
 	body, err := mh.parseRequest(r)
 	if err != nil {
@@ -49,6 +51,7 @@ func (mh *matrixHandler) Invert(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, res)
 }
 
+// Return the matrix as a 1 line string, with values separated by commas
 func (mh *matrixHandler) Flatten(w http.ResponseWriter, r *http.Request) {
 	body, err := mh.parseRequest(r)
 	if err != nil {
@@ -60,6 +63,7 @@ func (mh *matrixHandler) Flatten(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, strings.Join(flattened, ","))
 }
 
+// Return the sum of the integers in the matrix
 func (mh *matrixHandler) Sum(w http.ResponseWriter, r *http.Request) {
 	body, err := mh.parseRequest(r)
 	if err != nil {
@@ -75,6 +79,7 @@ func (mh *matrixHandler) Sum(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%d", sum)
 }
 
+// Return the product of the integers in the matrix
 func (mh *matrixHandler) Multiply(w http.ResponseWriter, r *http.Request) {
 	body, err := mh.parseRequest(r)
 	if err != nil {

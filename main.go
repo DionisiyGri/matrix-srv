@@ -19,6 +19,7 @@ const (
 
 func main() {
 	h := handlers.New(parser.New(), matrix.NewCSVMatrixer())
+
 	http.HandleFunc("/echo", h.Echo)
 	http.HandleFunc("/invert", h.Invert)
 	http.HandleFunc("/flatten", h.Flatten)
