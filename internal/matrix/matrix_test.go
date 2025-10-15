@@ -227,6 +227,14 @@ func TestMultiply(t *testing.T) {
 			expectError: false,
 		},
 		{
+			name: "matrix with zero",
+			input: [][]string{
+				{"2", "0", "3"},
+			},
+			expected:    0,
+			expectError: false,
+		},
+		{
 			name:        "Empty matrix",
 			input:       [][]string{},
 			expected:    0,
