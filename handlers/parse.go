@@ -7,7 +7,10 @@ import (
 
 // parseRequest reads a CSV file from a multipart form request and returns its records
 func (mh *matrixHandler) parseRequest(r *http.Request) ([][]string, error) {
-	r.ParseMultipartForm(10 << 20) //10mb max
+	err := r.ParseMultipartForm(10 << 20) //10mb max
+	if err != nil {
+		return nil, fmt.Errorf("invalid file size: %w", err)
+	}
 
 	file, _, err := r.FormFile("file")
 	if err != nil {
