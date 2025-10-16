@@ -6,24 +6,27 @@ import (
 	"net/http"
 )
 
+const maxUploadSize = 5 << 20 // 5 MB
+
 // parseRequest reads a CSV file from a multipart form request and returns its records
-func (mh *matrixHandler) parseRequest(r *http.Request) ([][]string, error) {
-	err := r.ParseMultipartForm(1 << 0) //5mb max
+func (mh *matrixHandler) parseRequest(w http.ResponseWriter, r *http.Request) ([][]string, error) {
+	r.Body = http.MaxBytesReader(w, r.Body, maxUploadSize)
+	err := r.ParseMultipartForm(maxUploadSize)
 	if err != nil {
-		log.Printf("fnvalid file size: %w", err)
+		log.Printf("invalid file size: %v", err)
 		return nil, fmt.Errorf("invalid file size")
 	}
 
 	file, _, err := r.FormFile("file")
 	if err != nil {
-		log.Printf("failed to fetch file: %w", err)
+		log.Printf("failed to fetch file: %v", err)
 		return nil, fmt.Errorf("failed to fetch file")
 	}
 	defer file.Close()
 
 	records, err := mh.parser.ParseCSV(file)
 	if err != nil {
-		log.Printf("error parsing file: %w", err)
+		log.Printf("error parsing file: %v", err)
 		return nil, fmt.Errorf("invalid data format")
 	}
 
